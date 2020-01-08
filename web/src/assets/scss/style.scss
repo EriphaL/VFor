@@ -1,0 +1,237 @@
+@import "../font/font.scss";
+//sass规范，被引用的文件名开头需要加下划线，被引用时则不需要
+@import './_variable.scss';
+
+//重置 *表示任意元素
+* {
+  // 表示以边框为准，加padding不会撑大，只是把内容挤压
+  box-sizing: border-box;
+  //禁止外面的样式
+  outline: none;
+}
+
+html {
+  font-size: 13px;
+}
+
+body {
+  margin: 0;
+  font-family: 'mingliu', Arial, Helvetica, sans-serif;
+  line-height: 1.2em;
+  background: #f1f1f1;
+}
+
+a {
+  color: #999;
+}
+p{
+  line-height: 1.5rem;
+}
+
+@each $colorKey,
+$color in $colors {
+
+  //字体颜色
+  .text-#{$colorKey} {
+    color: $color;
+  }
+
+  //背景颜色
+  .bg-#{$colorKey} {
+    background-color: $color;
+  }
+}
+
+//text三种对齐方式定义成工具类
+@each $var in (left, center, right) {
+  .text-#{$var} {
+    text-align: $var !important;
+  }
+}
+
+
+@each $sizeKey,
+$size in $font-sizes {
+  .fs-#{$sizeKey} {
+    font-size: $size;
+  }
+}
+
+//宽高边距样式,可以使图片缩放展示完整的图片
+.w-100{
+  width:100%;
+}
+.h-100{
+  width: 100%;
+}
+.h-80{
+  height:80%;
+}
+
+//flex
+.d-flex {
+  display: flex;
+}
+
+//垂直
+.flex-column {
+  flex-direction: column;
+}
+//换行
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+@each $key,
+$value in $flex-js {
+  .jc-#{$key} {
+    justify-content: $value;
+  }
+}
+
+//align-items
+
+@each $key,
+$value in $flex-ai {
+  .ai-#{$key} {
+    align-items: $value;
+  }
+}
+
+//左边固定，右边拉伸填满，简写形式
+.flex-1 {
+  flex: 1;
+}
+
+//具体
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+//边距实现
+
+@each $typeKey,
+$type in $spacing-types {
+
+  //.m-1没有方向
+  @each $sizeKey,
+  $size in $spacing-sizes {
+    .#{$typeKey}-#{$sizeKey} {
+      #{$type}: $size * $spacing-base-size;
+    }
+  }
+
+  //.mx-1表示左右边距
+  @each $sizeKey,
+  $size in $spacing-sizes {
+    .#{$typeKey}x-#{$sizeKey} {
+      #{$type}-left: $size * $spacing-base-size;
+      #{$type}-right: $size * $spacing-base-size;
+    }
+  }
+
+  //.my-1表示上下边距
+  @each $sizeKey,
+  $size in $spacing-sizes {
+    .#{$typeKey}y-#{$sizeKey} {
+      #{$type}-top: $size * $spacing-base-size;
+      #{$type}-bottom: $size * $spacing-base-size;
+    }
+  }
+
+  //.mt-1
+  @each $directionKey,
+  $direction in $spacing-directions {
+
+    @each $sizeKey,
+    $size in $spacing-sizes {
+      .#{$typeKey}#{$directionKey}-#{$sizeKey} {
+        #{$type}-#{$direction}: $size * $spacing-base-size;
+      }
+    }
+  }
+
+  .#{$typeKey} {
+    #{$type}: 0;
+  }
+}
+
+//按钮 align-items: center;表示上下垂直居中
+.btn {
+  border: none;
+  border-radius: .153846rem;
+  font-size: map-get($font-sizes, 'sm');
+  padding: 0.2rem 0.6rem;
+  &.btn-lg{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    i{
+      color:map-get($colors, 'primary');
+      font-weight:bold;
+      font-size: 1.5rem;
+      margin-right: 0.8rem;
+    }
+    background: map-get($colors, 'light-btn');
+    border: 1px solid map-get($colors, 'border-grey');
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+  }
+}
+
+//导航菜单的样式,默认横向、分散对齐
+.nav {
+  display: flex;
+  // justify-content: space-around;
+  // 嵌套里面用&符号表示.active是上一层的本身。加transparent这样在一定程度上表示对齐
+  .nav-item {
+    border-bottom: 3px solid transparent;
+    padding-bottom: 0.2rem;
+    &.active {
+      color: map-get($colors, 'primary');
+      border-bottom-color:map-get($colors, 'primary');
+    }
+  }
+  // 表示nav-inverse与nav平级
+  &.nav-inverse{
+    .nav-item{
+      border-bottom: 3px solid transparent;
+      padding-bottom: 0.2rem;
+      &.active {
+        color: map-get($colors, 'white');
+        border-bottom-color:map-get($colors, 'white');
+      }
+    }
+  }
+}
+//div底部阴影
+.b-shadow{
+  box-shadow: 1px 1px 3px #D4D9DE;
+  margin-bottom:3px;
+}
+//div底部线条
+.b-bottom{
+  border-bottom: 0.076923rem solid;
+  border-bottom-color: #d4d9de !important;
+  margin-bottom: 2px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+
+//文本溢出处理
+.text-ellipsis{
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  //不换行
+  white-space: nowrap;
+}
+
+// 边框
+@each $dir in (top,bottom,left,right){
+  .border-#{$dir}{
+    border-#{$dir}:1px solid $border-color;
+  }
+}
