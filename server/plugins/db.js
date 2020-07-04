@@ -1,7 +1,7 @@
 module.exports = app => {
   const mongoose = require('mongoose')
 
-  mongoose.connect('mongodb://localhost:27017/v',{
+  mongoose.connect('mongodb://localhost:27017/routine',{
     useNewUrlParser:true,
   })
 

@@ -40,7 +40,7 @@ module.exports = app => {
 
 
   //分类列表接口
-  router.get('/', auth(), async (req, res) => {
+  router.get('/',  async (req, res) => {
     //本来不加populate的话list页面上级分类显示的是id而不是名称，
     //所以需要用populate关联 取出什么东西。指需要parent的name。所以要把parent变成一个对象
     //并不是所有地方都要查parent，需要通过条件选择，用set-options变成数据。
@@ -59,7 +59,7 @@ module.exports = app => {
     res.send(model)
   })
   //：resource 动态函数来匹配categories之类的任意字符。动态模型，然后全局加一个中间件，统一的进行处理
-  app.use('/admin/api/rest/:resource', auth(), async (req, res, next) => {
+  app.use('/admin/api/rest/:resource',  async (req, res, next) => {
     //把小写的复数名称转换成大写的单数名称
     const modelName = require('inflection').classify(req.params.resource)
     // return res.send(modelName) ===打印出Category，找到相应的模型
@@ -78,7 +78,7 @@ module.exports = app => {
     dest: __dirname + '/../../uploads'
   })
   //可以在前端控制台中看form-data的名字是什么，这边是file
-  app.post('/admin/api/upload', auth(), upload.single('file'), async (req, res) => {
+  app.post('/admin/api/upload',  upload.single('file'), async (req, res) => {
     const file = req.file
     file.url = `http://localhost:3006/uploads/${file.filename}`
     res.send(file)
@@ -132,6 +132,11 @@ module.exports = app => {
 
   })
 
+
+  // router.get('/admin/city', async (req, res) => {
+  //   const model = await req.Model.findById(req.params.id)
+  //   res.send(model)
+  // })
 
 
 

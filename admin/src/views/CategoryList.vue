@@ -5,7 +5,8 @@
       <el-table-column prop="_id" label="ID" width="230"></el-table-column>
       <!-- 后端接口添加了populate方法，把parent变成了一个对象，以此来获取它的name。否则prop=parent只能拿到它的id -->
       <el-table-column prop="parent.name" label="上级分类"></el-table-column>
-      <el-table-column prop="name" label="分类名称"></el-table-column>
+      <el-table-column prop="name" label="标题"></el-table-column>
+      <el-table-column prop="path" label="路径"></el-table-column>
       <el-table-column fixed="right" label="操作" width="180">
         <template slot-scope="scope">
           <!-- scope表示当前行 -->
@@ -53,5 +54,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style>
+.el-table{
+  line-height: normal;
+}
 </style>
